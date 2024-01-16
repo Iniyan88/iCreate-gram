@@ -15,6 +15,6 @@ export const PostValidation = z.object({
     .min(5, { message: "string must contains atleast 5 characters" })
     .max(2000),
   file: z.custom<File[]>(),
-  Location: z.string().min(2).max(100),
-  Tags: z.string(),
+  location: z.string().min(2).max(100),
+  tags: z.string(),
 });

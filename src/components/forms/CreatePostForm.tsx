@@ -34,8 +34,8 @@ const CreatePostForm = ({ Post }: PostFormProps) => {
     defaultValues: {
       Thought: Post ? Post?.Thought : "",
       file: [],
-      Location: Post ? Post?.Location : "",
-      Tags: Post ? Post?.Tags.join(",") : "",
+      location: Post ? Post?.location : "",
+      tags: Post ? Post?.tags.join(",") : "",
     },
   });
   //@ts-ignore
@@ -90,7 +90,7 @@ const CreatePostForm = ({ Post }: PostFormProps) => {
         />
         <FormField
           control={form.control}
-          name="Location"
+          name="location"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="shad-form_label">Add Location</FormLabel>
@@ -103,7 +103,7 @@ const CreatePostForm = ({ Post }: PostFormProps) => {
         />
         <FormField
           control={form.control}
-          name="Tags"
+          name="tags"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="shad-form_label">

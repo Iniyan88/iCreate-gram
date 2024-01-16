@@ -2,14 +2,18 @@ import React from "react";
 import { Models } from "appwrite";
 import { Link } from "react-router-dom";
 import { timeAgo } from "@/lib/utils";
+import { userDetails } from "@/details/details";
+import PostStats from "./PostStats";
 type PostCardProps = {
   post: Models.Document;
 };
 const PostCard = ({ post }: PostCardProps) => {
+  const { user } = userDetails();
+  if (!post.creator) return;
   return (
-    <div className="post-card">
+    <div className="post-card text-slate-100">
       <div className="flex-between">
-        <div className="flex items-center gap-3  text-slate-100">
+        <div className="flex items-center gap-3">
           <Link to={`/profile/${post.creator.$id}`}>
             <img
               src={post?.creator?.imgUrl || "/public/assets/react.svg"}
@@ -28,10 +32,31 @@ const PostCard = ({ post }: PostCardProps) => {
             </div>
           </div>
         </div>
-        <Link to={`/update-post/${post.$id}`}>
-          <img src="" alt="" />
+        <Link
+          to={`/update-post/${post.$id}`}
+          className={`${user.id !== post.creator.$id && "hidden"}`}
+        >
+          <img src="/edit.svg" alt="edit" width={22} height={22} />
         </Link>
       </div>
+      <Link to={`/posts/${post.$id}`}>
+        <div className="small-medium lg:base-medium py-5 ">
+          <p>{post.Thought}</p>
+          <ul className="flex gap-1 mt-2">
+            {post.tags.map((tag: string) => (
+              <li key={tag} className="text-light-3">
+                #{tag}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <img
+          src={post.image || "/assets/react.svg"}
+          alt="post image"
+          className="post-card_img"
+        />
+      </Link>
+      <PostStats post={post} userId={user.id}></PostStats>
     </div>
   );
 };
