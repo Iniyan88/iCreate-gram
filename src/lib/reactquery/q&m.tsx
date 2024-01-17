@@ -8,6 +8,7 @@ import {
   createNewUser,
   createPost,
   deleteDownloadedPost,
+  getCurrentUser,
   getRecentPosts,
   postDownloads,
   postLikes,
@@ -112,5 +113,11 @@ export const useDeleteDownloadedPost = () => {
         queryKey: [QUERY_KEYS.GET_CURRENT_USER],
       });
     },
+  });
+};
+export const useGetCurrentUser = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+    queryFn: getCurrentUser,
   });
 };

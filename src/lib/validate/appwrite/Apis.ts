@@ -200,8 +200,8 @@ export async function postDownloads(postId: string, userId: string) {
       appwriteConfig.downloadsCollectionId,
       ID.unique(),
       {
-        userId: userId,
-        postId: postId,
+        user: userId,
+        post: postId,
       }
     );
     if (!updatedPost) throw Error;
