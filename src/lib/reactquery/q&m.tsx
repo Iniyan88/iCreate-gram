@@ -8,15 +8,21 @@ import {
   createNewUser,
   createPost,
   deleteDownloadedPost,
+  deletePost,
   getCurrentUser,
+  getInfinitePosts,
+  getPostById,
   getRecentPosts,
   postDownloads,
   postLikes,
+  searchPosts,
   signInAccount,
   signOutAccount,
+  updatePost,
 } from "../validate/appwrite/Apis";
-import { INewUser, INewPost } from "@/model/data";
+import { INewUser, INewPost, IUpdatePost } from "@/model/data";
 import { QUERY_KEYS } from "./queryKeys";
+import exp from "constants";
 
 export const useMutationUserAccount = () => {
   return useMutation({
@@ -119,5 +125,55 @@ export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_CURRENT_USER],
     queryFn: getCurrentUser,
+  });
+};
+export const useGetPostById = (postId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_POST_BY_ID, postId],
+    queryFn: () => getPostById(postId),
+    enabled: !!postId,
+  });
+};
+export const useUpdatePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (post: IUpdatePost) => updatePost(post),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
+      });
+    },
+  });
+};
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ postId, imgId }: { postId: string; imgId: string }) =>
+      deletePost(postId, imgId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+    },
+  });
+};
+export const useGetPosts = () => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: getInfinitePosts,
+    getNextPageParam: (lastPage) => {
+      if (lastPage && lastPage.documents.length === 0) {
+        return null;
+        const lastId = lastPage.documents[lastPage?.documents.length - 1].$id;
+        return lastId;
+      }
+    },
+  });
+};
+export const useSearchPosts = (searchTerm: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.SEARCH_POSTS],
+    queryFn: () => searchPosts(searchTerm),
+    enabled: !!searchTerm,
   });
 };

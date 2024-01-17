@@ -34,7 +34,7 @@ export type IUpdatePost = {
   postId: string;
   Thought: string;
   imgId: string;
-  imgUrl: URL;
+  image: URL;
   file: File[];
   location?: string;
   tags?: string;

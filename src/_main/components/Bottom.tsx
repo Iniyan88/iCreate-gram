@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const Bottom = () => {
   return (
     <section className="bottom-bar">
-      <Link to="/Home" className="bottombar-link">
+      <Link to="/" className="bottombar-link">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="16"

@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { useState, useEffect } from "react";
 import { Models } from "appwrite";
 import {
@@ -12,11 +13,11 @@ import Loader from "@/components/ui/Loader/Loader";
 import { get } from "http";
 import { getCurrentUser } from "@/lib/validate/appwrite/Apis";
 type PostStatsProps = {
-  post: Models.Document;
+  post?: Models.Document;
   userId: string;
 };
 const PostStats = ({ post, userId }: PostStatsProps) => {
-  const likesList = post.likes.map((user: Models.Document) => user.$id);
+  const likesList = post?.likes.map((user: Models.Document) => user.$id);
   const [likes, setLikes] = useState(likesList);
   const [isDownloaded, setIsDownloaded] = useState(false);
   const { mutate: likePost } = useLikePost();
@@ -35,10 +36,10 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
       newLikes.push(userId);
     }
     setLikes(newLikes);
-    likePost({ postId: post.$id, likesArray: newLikes });
+    likePost({ postId: post?.$id || "", likesArray: newLikes });
   };
   const DownloadedPost = currentUser?.download.find(
-    (record: Models.Document) => record.post.$id === post.$id
+    (record: Models.Document) => record.post.$id === post?.$id
   );
   useEffect(() => {
     setIsDownloaded(!!DownloadedPost);
@@ -51,7 +52,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
       deleteDownloadedPost(DownloadedPost.$id);
       return;
     } else {
-      downloadPost({ postId: post.$id, userId });
+      downloadPost({ postId: post?.$id || "", userId });
       setIsDownloaded(true);
     }
   };

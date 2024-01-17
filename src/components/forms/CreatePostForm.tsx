@@ -16,18 +16,24 @@ import { Textarea } from "../ui/textarea";
 import FileUploader from "../shared/FileUploader";
 import { PostValidation } from "@/lib/validate/validation";
 import { Models } from "appwrite";
-import { useCreatePost } from "@/lib/reactquery/q&m";
+import { useCreatePost, useUpdatePost } from "@/lib/reactquery/q&m";
 import { userDetails } from "@/details/details";
 import { useToast } from "../ui/use-toast";
 type PostFormProps = {
   Post?: Models.Document;
+  action: "create" | "update";
 };
 
-const CreatePostForm = ({ Post }: PostFormProps) => {
+const CreatePostForm = ({ Post, action }: PostFormProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { mutateAsync: createPost, isPending: isLoadingCreate } =
     useCreatePost();
+  const { mutateAsync: updatePost, isPending: isLoadingUpdate } =
+    useUpdatePost();
+  // const { mutateAsync: createPost, isPending: isLoadingCreate } =
+  //   useCreatePost();
+
   const { user } = userDetails();
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
@@ -40,6 +46,21 @@ const CreatePostForm = ({ Post }: PostFormProps) => {
   });
   //@ts-ignore
   async function onSubmit(values: z.infer<typeof PostValidation>) {
+    if (Post && action === "update") {
+      const updatedPost = await updatePost({
+        ...values,
+        postId: Post.$id,
+        imgId: Post?.imageId,
+        image: Post?.image,
+      });
+      if (!updatedPost) {
+        toast({
+          title: "Please try again",
+        });
+      }
+
+      return navigate(`/post/${Post.$id}`);
+    }
     const newPost = await createPost({ ...values, userId: user.id });
     if (!newPost) {
       toast({
@@ -81,7 +102,7 @@ const CreatePostForm = ({ Post }: PostFormProps) => {
               <FormControl>
                 <FileUploader
                   fieldChange={field.onChange}
-                  mediaUrl={Post?.mediaUrl}
+                  mediaUrl={Post?.image}
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />
@@ -128,8 +149,10 @@ const CreatePostForm = ({ Post }: PostFormProps) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
+            disabled={isLoadingCreate || isLoadingUpdate}
           >
-            Submit
+            {isLoadingCreate || (isLoadingUpdate && "Loading...")}
+            {action}Post
           </Button>
         </div>
       </form>
