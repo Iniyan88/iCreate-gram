@@ -38,12 +38,7 @@ const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
         </>
       ) : (
         <div className="file_uploader-box">
-          <img
-            src="/public/drag-and-drop.png"
-            alt="drop"
-            width={96}
-            height={77}
-          />
+          <img src="/drag-and-drop.png" alt="drop" width={96} height={77} />
           <h3 className="base-medium text-light-2 mb-2 mt-5">
             Drag your Photos here
           </h3>

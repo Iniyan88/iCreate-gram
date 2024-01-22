@@ -3,8 +3,10 @@ import { userDetails } from "@/details/details";
 import { useMutationSignOut } from "@/lib/reactquery/q&m";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Leftbar = () => {
+  const location = useLocation();
   const { mutate: signOut, isSuccess } = useMutationSignOut();
   const navigate = useNavigate();
   const { user } = userDetails();
