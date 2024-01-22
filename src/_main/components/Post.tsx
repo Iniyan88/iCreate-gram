@@ -26,7 +26,7 @@ const Post = () => {
                 className="flex items-center gap-3"
               >
                 <img
-                  src={post?.creator?.imgUrl || "/public/assets/react.svg"}
+                  src={post?.creator?.imgUrl || "/public/assets/react.png"}
                   alt="creator"
                   className="rounded-full w-8 h-8 lg:h-12 lg:w-12"
                 />
@@ -43,7 +43,7 @@ const Post = () => {
                   </div>
                 </div>
               </Link>
-              <div className="flex-center gap-2">
+              <div className="flex-center gap-4">
                 <Link
                   to={`/update-post/${post?.$id}`}
                   className={`${user.id !== post?.creator.$id && "hidden"}`}
@@ -55,7 +55,13 @@ const Post = () => {
                   variant="ghost"
                   className={`${user.id !== post?.creator.$id && "hidden"}`}
                 >
-                  Del
+                  <img
+                    src="/assets/delete.svg"
+                    alt="delete"
+                    width={20}
+                    height={20}
+                  />
+                  {/* del */}
                 </Button>
               </div>
             </div>

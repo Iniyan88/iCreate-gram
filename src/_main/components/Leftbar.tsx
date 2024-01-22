@@ -16,7 +16,7 @@ const Leftbar = () => {
       <div className="flex flex-col gap-11 mt-11">
         <Link to="/" className="flex gap-3 items-center">
           <img
-            src={user.imgUrl || "/assets/react.svg"}
+            src={user.imgUrl || "/assets/react.png"}
             className="h-10  w-10 rounded-full"
             alt=""
           />
