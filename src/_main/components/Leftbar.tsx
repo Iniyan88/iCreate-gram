@@ -33,8 +33,12 @@ const Leftbar = () => {
         ></Link>
         <div className="flex items-center  ">
           <ul className="flex flex-col gap-6">
-            <li className="rounded-lg base-medium hover:bg-primary-500 transition text-slate-100">
-              <Link to="" className="ml-5 flex gap-4 items-center py-1">
+            <li
+              className={`rounded-lg base-medium hover:bg-primary-500 transition text-slate-100 ${
+                location.pathname === "/" && "bg-primary-500"
+              }`}
+            >
+              <Link to="/" className="ml-5 flex gap-4 items-center py-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="16"
@@ -50,7 +54,11 @@ const Leftbar = () => {
                 Home
               </Link>
             </li>
-            <li className="rounded-lg base-medium hover:bg-primary-500 transition text-slate-100">
+            <li
+              className={`rounded-lg base-medium hover:bg-primary-500 transition text-slate-100 ${
+                location.pathname === "/explore" && "bg-primary-500"
+              }`}
+            >
               <Link to="/explore" className="ml-5 flex gap-3 items-center py-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +74,11 @@ const Leftbar = () => {
                 Feed
               </Link>
             </li>
-            <li className="rounded-lg base-medium hover:bg-primary-500 transition text-slate-100">
+            <li
+              className={`rounded-lg base-medium hover:bg-primary-500 transition text-slate-100 ${
+                location.pathname == "/all-users" && "bg-primary-500"
+              }`}
+            >
               <Link
                 to="/all-users"
                 className="ml-5 flex gap-4 items-center py-1"
@@ -85,7 +97,11 @@ const Leftbar = () => {
                 Public
               </Link>
             </li>
-            <li className="rounded-lg base-medium hover:bg-primary-500 transition text-slate-100">
+            <li
+              className={`rounded-lg base-medium hover:bg-primary-500 transition text-slate-100 ${
+                location.pathname === "/downloads" && "bg-primary-500"
+              }`}
+            >
               <Link
                 to="downloads"
                 className="ml-5 flex gap-4 items-center py-1"
@@ -104,9 +120,13 @@ const Leftbar = () => {
                 Downloads
               </Link>
             </li>
-            <li className="rounded-lg base-medium hover:bg-primary-500 transition text-slate-100">
+            <li
+              className={`rounded-lg base-medium hover:bg-primary-500 transition text-slate-100 ${
+                location.pathname === "/create-post" && "bg-primary-500"
+              }`}
+            >
               <Link
-                to="create-post"
+                to="/create-post"
                 className="ml-5 flex gap-4 items-center py-1"
               >
                 <svg
