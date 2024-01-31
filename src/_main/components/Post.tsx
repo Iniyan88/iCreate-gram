@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { userDetails } from "@/details/details";
 import { useGetPostById } from "@/lib/reactquery/q&m";
 import { timeAgo } from "@/lib/utils";
-import React from "react";
 import { Link, useParams } from "react-router-dom";
 import PostStats from "./PostStats";
 
@@ -34,7 +33,7 @@ const Post = () => {
                   <p> {post?.creator.name}</p>
                   <div className="flex-center gap-2 text-light-3">
                     <p className="subtle-semibold lg:small-regular">
-                      {timeAgo(post?.$createdAt)}
+                      {timeAgo(post?.$createdAt || "")}
                     </p>
                     -
                     <p className="sublt-semibold lg:small-regular">

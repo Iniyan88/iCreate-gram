@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import { useState } from "react";
 import SearchResults from "./SearchResults";
 import GridPostList from "./GridPostList";
 import { useGetPosts, useSearchPosts } from "@/lib/reactquery/q&m";
@@ -7,7 +7,7 @@ import useDebounce from "@/hooks/useDebounce";
 import Loader from "@/components/ui/Loader/Loader";
 
 const Explore = () => {
-  const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
+  const { data: posts } = useGetPosts();
   const [searchValue, setSearchValue] = useState("");
   const debouncedValue = useDebounce(searchValue, 500);
   const { data: searchedPosts, isFetching: isSearchFetching } =
@@ -51,13 +51,13 @@ const Explore = () => {
         {shouldShowSearchResults ? (
           <SearchResults
             isSearchFetching={isSearchFetching}
-            searchedPosts={searchedPosts}
+            searchedPosts={searchedPosts?.documents || []}
           />
         ) : shouldShowPosts ? (
           <p className="text-light-4 mt-10 text-center w-full">End of Posts</p>
         ) : (
           posts.pages.map((item, index) => (
-            <GridPostList key={`page-${index}`} posts={item.documents} />
+            <GridPostList key={`page-${index}`} posts={item?.documents || []} />
           ))
         )}
       </div>

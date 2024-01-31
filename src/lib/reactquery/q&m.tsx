@@ -22,8 +22,6 @@ import {
 } from "../validate/appwrite/Apis";
 import { INewUser, INewPost, IUpdatePost } from "@/model/data";
 import { QUERY_KEYS } from "./queryKeys";
-import exp from "constants";
-
 export const useMutationUserAccount = () => {
   return useMutation({
     mutationFn: (user: INewUser) => createNewUser(user),
@@ -40,9 +38,6 @@ export const useMutationSignOut = () => {
     mutationFn: signOutAccount,
   });
 };
-
-///queries
-
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -160,14 +155,16 @@ export const useDeletePost = () => {
 export const useGetPosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-    queryFn: getInfinitePosts,
-    getNextPageParam: (lastPage) => {
-      if (lastPage && lastPage.documents.length === 0) {
+    queryFn: ({ pageParam }) => getInfinitePosts({ pageParam }),
+    getNextPageParam: (lastPage: any) => {
+      if (!lastPage || !lastPage.documents || lastPage.documents.length === 0) {
         return null;
-        const lastId = lastPage.documents[lastPage?.documents.length - 1].$id;
-        return lastId;
       }
+
+      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
+      return lastId;
     },
+    initialPageParam: 0,
   });
 };
 export const useSearchPosts = (searchTerm: string) => {

@@ -1,4 +1,3 @@
-import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -39,7 +38,7 @@ const SignUp = () => {
       password: "",
     },
   });
-  async function onSubmit(values: z.infer<typeof signUpValidation>) {
+  async function onSubmit(values) {
     const addUser = await createNewUser(values);
     if (!addUser) {
       return toast({

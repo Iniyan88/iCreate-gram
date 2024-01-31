@@ -8,10 +8,7 @@ import {
   useLikePost,
 } from "@/lib/reactquery/q&m";
 import { checkIsLiked } from "@/lib/utils";
-import { set } from "react-hook-form";
 import Loader from "@/components/ui/Loader/Loader";
-import { get } from "http";
-import { getCurrentUser } from "@/lib/validate/appwrite/Apis";
 type PostStatsProps = {
   post?: Models.Document;
   userId: string;

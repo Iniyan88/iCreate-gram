@@ -1,10 +1,9 @@
-import React from "react";
-import { Models } from "@/types/models";
 import { userDetails } from "@/details/details";
 import { Link } from "react-router-dom";
 import PostStats from "./PostStats";
+import { Models } from "appwrite";
 type GridPostListProps = {
-  posts: Models.Documents[];
+  posts: Models.Document[];
   showUser?: boolean;
   showStats?: boolean;
 };
