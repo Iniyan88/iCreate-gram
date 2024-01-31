@@ -24,11 +24,10 @@ import { userDetails } from "@/details/details";
 const SignUp = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { checkAuthUser, Loading: userLoading } = userDetails();
+  const { checkAuthUser } = userDetails();
   const { mutateAsync: createNewUser, isPending: creatingUser } =
     useMutationUserAccount();
-  const { mutateAsync: signInAccount, isPending: signingIn } =
-    useMutationSignIn();
+  const { mutateAsync: signInAccount } = useMutationSignIn();
   const form = useForm<z.infer<typeof signUpValidation>>({
     resolver: zodResolver(signUpValidation),
     defaultValues: {
@@ -38,7 +37,7 @@ const SignUp = () => {
       password: "",
     },
   });
-  async function onSubmit(values) {
+  async function onSubmit(values: z.infer<typeof signUpValidation>) {
     const addUser = await createNewUser(values);
     if (!addUser) {
       return toast({
