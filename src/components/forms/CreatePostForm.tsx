@@ -37,7 +37,7 @@ const CreatePostForm = ({ Post, action }: PostFormProps) => {
   const { user } = userDetails();
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
-    defaultValues: {
+    defaultValues: {  
       Thought: Post ? Post?.Thought : "",
       file: [],
       location: Post ? Post?.location : "",
