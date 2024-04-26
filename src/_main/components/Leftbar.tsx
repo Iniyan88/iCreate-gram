@@ -16,7 +16,7 @@ const Leftbar = () => {
   return (
     <nav className="sticky top-0 hidden md:flex h-full px-6 py-10 flex-col min-w-[270px] bg-dark-2">
       <div className="flex flex-col gap-11 mt-11">
-        <Link to="/" className="flex gap-3 items-center">
+        <Link to={`/profile/${user.id}`} className="flex gap-3 items-center">
           <img
             src={user.imgUrl || "/assets/react.png"}
             className="h-10  w-10 rounded-full"
