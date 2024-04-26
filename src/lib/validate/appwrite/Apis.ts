@@ -52,7 +52,6 @@ export async function saveUser(user: {
 export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
-    console.log(user.email, user.password);
     return session;
   } catch (error) {
     console.log(error);
@@ -127,7 +126,6 @@ export async function deleteFile(fileId: string) {
 
 export async function createPost(post: INewPost) {
   try {
-    console.log(post.file[0]);
     const uploadedFile = await uploadFile(post.file[0]);
     if (!uploadedFile) throw Error;
     const fileUrl = getFilePreview(uploadedFile.$id);
